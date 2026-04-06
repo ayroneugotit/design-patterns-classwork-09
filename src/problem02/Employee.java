@@ -1,40 +1,28 @@
 package problem02;
 
-class Employee extends OrganizationComponent {
-    protected String name;
-    protected String position;
-    protected double salary;
+public class Employee extends AOrganizationComponent {
+    private String name;
+    private String surname;
+    private int salary;
 
-    public Employee(String name, String position, double salary) {
+    public Employee(String name, String surname, int salary) {
         this.name = name;
-        this.position = position;
-        this.salary = salary;
-    }
-
-    public void setSalary(double salary) {
+        this.surname = surname;
         this.salary = salary;
     }
 
     @Override
-    public void display(int level) {
-        System.out.println(" ".repeat(level) + "Сотрудник: " + name + ", " + position + ", зарплата: " + salary);
+    public void display() {
+        System.out.println("Employee: '" + this.name + " " + this.surname + "' (" + this.salary + "$)");
     }
 
     @Override
-    public double getBudget() {
-        return salary;
+    public int getSalary() {
+        return this.salary;
     }
 
     @Override
-    public int getEmployeeCount() {
+    int getQty() {
         return 1;
-    }
-
-    @Override
-    public OrganizationComponent findByName(String name) {
-        if (this.name.equalsIgnoreCase(name)) {
-            return this;
-        }
-        return null;
     }
 }

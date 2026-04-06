@@ -2,18 +2,17 @@ package problem01;
 
 public class Main {
     public static void main(String[] args) {
+        RoomBookingService roomBookingService = new RoomBookingService();
+        RestaurantService restaurantService = new RestaurantService();
+        EventService eventService = new EventService();
+        CleaningService cleaningService = new CleaningService();
 
-        HotelFacade hotel = new HotelFacade();
+        roomBookingService.addRoom(new Room());
+        roomBookingService.addRoom(new Room());
 
-        hotel.bookRoomWithServices("Полина", 101, "Паста");
-
+        Hotel hotel = new Hotel(roomBookingService, restaurantService, eventService, cleaningService);
+        hotel.bookWithService(1);
         System.out.println();
-        hotel.organizeEvent("Конференц-зал A", "Проектор", "Женя", 202);
-        System.out.println();
-        hotel.reserveTableWithTaxi("Антонина", "Стейк");
-        System.out.println();
-        hotel.requestCleaning(101);
-        System.out.println();
-        hotel.cancelRoom(202);
+        hotel.bookWithEvent(2, "Corporate");
     }
 }

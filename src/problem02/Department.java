@@ -3,70 +3,43 @@ package problem02;
 import java.util.ArrayList;
 import java.util.List;
 
-class Department extends OrganizationComponent {
+public class Department extends AOrganizationComponent {
+    private List<AOrganizationComponent> components;
     private String name;
-    private List<OrganizationComponent> components = new ArrayList<>();
 
     public Department(String name) {
+        this.components = new ArrayList<>();
         this.name = name;
     }
 
+    public void addComponent(AOrganizationComponent component) {
+        if (this.components.contains(component)) return;
+        this.components.add(component);
+    }
+
     @Override
-    public void add(OrganizationComponent component) {
-        if (!components.contains(component)) {
-            components.add(component);
+    void display() {
+        System.out.println("Department: '" + this.name + "'");
+        for (AOrganizationComponent component : this.components) {
+            component.display();
         }
     }
 
     @Override
-    public void remove(OrganizationComponent component) {
-        components.remove(component);
+    int getSalary() {
+        int totalSalary = 0;
+        for (AOrganizationComponent component : this.components) {
+            totalSalary += component.getSalary();
+        }
+        return totalSalary;
     }
 
     @Override
-    public void display(int level) {
-        System.out.println(" ".repeat(level) + "Отдел: " + name);
-        for (OrganizationComponent component : components) {
-            component.display(level + 2);
+    int getQty() {
+        int totalQty = 0;
+        for (AOrganizationComponent component : this.components) {
+            totalQty += component.getQty();
         }
-    }
-
-    @Override
-    public double getBudget() {
-        double total = 0;
-        for (OrganizationComponent component : components) {
-            total += component.getBudget();
-        }
-        return total;
-    }
-
-    @Override
-    public int getEmployeeCount() {
-        int total = 0;
-        for (OrganizationComponent component : components) {
-            total += component.getEmployeeCount();
-        }
-        return total;
-    }
-
-    @Override
-    public OrganizationComponent findByName(String name) {
-        for (OrganizationComponent component : components) {
-            OrganizationComponent result = component.findByName(name);
-            if (result != null) {
-                return result;
-            }
-        }
-        return null;
-    }
-
-    public void listAllEmployees() {
-        for (OrganizationComponent component : components) {
-            if (component instanceof Employee) {
-                component.display(0);
-            } else if (component instanceof Department) {
-                ((Department) component).listAllEmployees();
-            }
-        }
+        return totalQty;
     }
 }
